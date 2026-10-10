@@ -61,8 +61,11 @@ def publish(folder):
     media = sorted([p for p in folder.iterdir() if p.suffix.lower() in IMG | VID], key=natural)[:10]
     base = {"chat_id": CHAT}
 
+    docs = sorted([p for p in folder.iterdir() if p.suffix.lower() == ".pdf"], key=natural)
     if not media:
         api("sendMessage", {**base, "text": text, **pm})
+        for d in docs:
+            api("sendDocument", base, {"document": d})
         return
 
     caption_in_media = bool(text) and len(text) <= 1024
@@ -85,6 +88,8 @@ def publish(folder):
         api("sendMediaGroup", {**base, "media": items}, files)
     if text and not caption_in_media:
         api("sendMessage", {**base, "text": text, **pm})
+    for d in docs:
+        api("sendDocument", base, {"document": d})
 
 
 def main():

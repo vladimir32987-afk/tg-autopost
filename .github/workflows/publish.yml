@@ -20,7 +20,7 @@ jobs:
       - run: python3 scripts/publish_threads.py
         if: always()
         env:
-          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          THREADS_TOKEN: ${{ secrets.THREADSTOKEN }}
       - name: Отметить опубликованное
         if: always()
         run: |

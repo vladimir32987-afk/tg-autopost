@@ -17,6 +17,10 @@ jobs:
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: "@vladimirAIAvtom"
+      - run: python3 scripts/publish_threads.py
+        if: always()
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
       - name: Отметить опубликованное
         if: always()
         run: |

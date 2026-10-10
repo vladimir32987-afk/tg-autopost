@@ -16,7 +16,7 @@ jobs:
       - run: python3 scripts/publish.py
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT }}
+          TG_CHAT_ID: "@vladimirAIAvtom"
       - name: Отметить опубликованное
         if: always()
         run: |

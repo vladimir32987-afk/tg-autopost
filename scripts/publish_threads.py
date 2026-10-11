@@ -140,7 +140,9 @@ def main():
             print(f"threads опубликовано: {d.name}")
         except Exception as e:  # noqa: BLE001
             failed = True
-            print(f"threads ОШИБКА {d.name}: {e}")
+            msg=str(e).replace("\n"," ")[:400]
+            print(f"threads ОШИБКА {d.name}: {msg}")
+            print(f"::error title=threads {d.name}::{msg}")
     if failed:
         sys.exit(1)
 

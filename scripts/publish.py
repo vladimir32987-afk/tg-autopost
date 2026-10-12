@@ -51,13 +51,30 @@ def natural(p):
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", p.name)]
 
 
+ICONS = {"instagram": "📸", "threads": "🧵", "telegram": "✈️", "бот": "🤖"}
+
+
+def to_html(text):
+    """Экранирует текст и превращает строки вида «Метка: домен/путь» в кликабельную метку."""
+    import html as _h
+    def line(l):
+        m = re.fullmatch(r"(Instagram|Threads|Telegram|Бот):\s*((?:https?://)?[\w.-]+\.[a-z]{2,}/\S*)", l.strip())
+        if not m:
+            return _h.escape(l, quote=False)
+        url = m[2] if m[2].startswith("http") else "https://" + m[2]
+        return f'{ICONS[m[1].lower()]} <a href="{_h.escape(url)}">{m[1]}</a>'
+    return "\n".join(line(l) for l in text.split("\n"))
+
+
 def publish(folder):
     text_file = folder / "text.md"
     text = text_file.read_text(encoding="utf-8").strip() if text_file.exists() else ""
     meta = {}
     if (folder / "meta.json").exists():
         meta = json.loads((folder / "meta.json").read_text(encoding="utf-8"))
-    pm = {"parse_mode": meta["parse_mode"]} if meta.get("parse_mode") else {}
+    pm = {"parse_mode": "HTML"}
+    plain = text
+    text = to_html(text)
     media = sorted([p for p in folder.iterdir() if p.suffix.lower() in IMG | VID and not p.name.startswith("th_")], key=natural)[:10]
     base = {"chat_id": CHAT}
 
@@ -68,7 +85,7 @@ def publish(folder):
             api("sendDocument", base, {"document": d})
         return
 
-    caption_in_media = bool(text) and len(text) <= 1024
+    caption_in_media = bool(text) and len(plain) <= 1024
     if len(media) == 1:
         p = media[0]
         is_vid = p.suffix.lower() in VID

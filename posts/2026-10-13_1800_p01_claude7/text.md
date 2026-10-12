@@ -9,3 +9,6 @@
 7. Разбор таблицы: «3 вывода и 1 действие на завтра».
 
 Сохрани себе. Какой промпт добавить в следующий список?
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

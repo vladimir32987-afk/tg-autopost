@@ -9,3 +9,6 @@
 Бот: t.me/UnikalizatorEcom_bot?start=tg_day1
 
 Следи за счётчиком.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

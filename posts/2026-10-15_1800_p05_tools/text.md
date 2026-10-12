@@ -9,3 +9,6 @@
 Как выбрать: начни с самой частой задачи, дай разным инструментам одно задание и сравни, платное бери, когда упёрся в лимит.
 
 Не покупай годовую подписку, не попробовав.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

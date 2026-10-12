@@ -8,3 +8,6 @@
 Пример: хочется бросить проект после первого провала, потому что обидно. Через 10 месяцев главным будет вывод из провала, а не обида.
 
 Применяю к крупным тратам, найму и смене ниши.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

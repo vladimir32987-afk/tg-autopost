@@ -5,3 +5,6 @@
 Загрузи реальное фото товара как референс. Меняй фон, свет и ракурс.
 
 Проверь: форма и цвет совпадают с реальным товаром, нет искажений, фото не обещает того, чего нет.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

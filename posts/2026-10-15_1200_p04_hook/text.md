@@ -7,3 +7,6 @@
 5. Спор: «Все советуют X, а я делаю наоборот».
 
 Проверка: скажи фразу вслух. Хочется слушать дальше? Если нет, переделай. Сними 3 версии начала и сравни удержание.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

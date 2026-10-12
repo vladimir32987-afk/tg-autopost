@@ -7,3 +7,6 @@
 Лайки смотри в последнюю очередь: они самые слабые сигналы.
 
 Что разобрать дальше по Инсте?
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

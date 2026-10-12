@@ -3,3 +3,6 @@
 Внутри: шапка профиля, актуальное, закреп, контент-план на 2 недели, рилсы и метрики недели.
 
 Забирай файл и сохрани себе.
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

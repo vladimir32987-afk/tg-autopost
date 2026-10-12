@@ -8,3 +8,6 @@
 Результат: не думаю каждый день, что публиковать, и посты выходят, даже когда я занят.
 
 Рассказать, как собрана автопубликация?
+
+Instagram: instagram.com/vladimir_shchetkovsky
+Threads: threads.com/@vladimir_shchetkovsky

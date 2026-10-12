@@ -93,6 +93,13 @@ def publish(folder):
     text = tf.read_text(encoding="utf-8").strip() if tf.exists() else ""
     parts = chunks(text) if text else [""]
     imgs = sorted([p for p in folder.iterdir() if p.suffix.lower() in IMG], key=natural)[:20]
+    tm = folder / "threads.md"
+    if tm.exists():
+        # отдельная текстовая ветка: части разделены строкой ---, без картинок
+        parts = [x.strip() for x in tm.read_text(encoding="utf-8").split("\n---\n") if x.strip()]
+        if any(len(x) > LIMIT for x in parts):
+            raise RuntimeError(f"threads.md: часть длиннее {LIMIT} символов")
+        imgs = []
     base = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/posts/{urllib.parse.quote(folder.name)}"
     first = {"text": parts[0]} if parts[0] else {}
 

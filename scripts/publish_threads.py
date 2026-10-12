@@ -121,8 +121,16 @@ def publish(folder):
             "media_type": "CAROUSEL", "children": ",".join(kids), **first})["id"]
     post_id = publish_container(cid)
     last = post_id
-    for part in parts[1:]:
-        rid = call("POST", "me/threads", {"media_type": "TEXT", "text": part, "reply_to_id": last})["id"]
+    for i, part in enumerate(parts[1:], 1):
+        args = {"media_type": "TEXT", "text": part, "reply_to_id": last}
+        rid = None
+        if i == len(parts) - 1 and "t.me/vladimirAIAvtom" in part:
+            try:  # карточка-превью канала под последней частью; при ошибке публикуем без неё
+                rid = call("POST", "me/threads", {**args, "link_attachment": "https://t.me/vladimirAIAvtom"})["id"]
+            except Exception as e:  # noqa: BLE001
+                print(f"link_attachment не прошёл: {str(e)[:200]}")
+        if rid is None:
+            rid = call("POST", "me/threads", args)["id"]
         last = publish_container(rid)
 
 

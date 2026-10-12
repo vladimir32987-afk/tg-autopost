@@ -99,7 +99,7 @@ def publish(folder):
         parts = [x.strip() for x in tm.read_text(encoding="utf-8").split("\n---\n") if x.strip()]
         if any(len(x) > LIMIT for x in parts):
             raise RuntimeError(f"threads.md: часть длиннее {LIMIT} символов")
-        imgs = []
+        imgs = [folder / "th_cover.png"] if (folder / "th_cover.png").exists() else []
     base = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/posts/{urllib.parse.quote(folder.name)}"
     first = {"text": parts[0]} if parts[0] else {}
 

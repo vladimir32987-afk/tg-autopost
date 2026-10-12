@@ -58,7 +58,7 @@ def publish(folder):
     if (folder / "meta.json").exists():
         meta = json.loads((folder / "meta.json").read_text(encoding="utf-8"))
     pm = {"parse_mode": meta["parse_mode"]} if meta.get("parse_mode") else {}
-    media = sorted([p for p in folder.iterdir() if p.suffix.lower() in IMG | VID], key=natural)[:10]
+    media = sorted([p for p in folder.iterdir() if p.suffix.lower() in IMG | VID and not p.name.startswith("th_")], key=natural)[:10]
     base = {"chat_id": CHAT}
 
     docs = sorted([p for p in folder.iterdir() if p.suffix.lower() == ".pdf"], key=natural)

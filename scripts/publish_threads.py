@@ -58,7 +58,18 @@ def wait_ready(cid):
 
 def publish_container(cid):
     wait_ready(cid)
-    return call("POST", "me/threads_publish", {"creation_id": cid})["id"]
+    last = None
+    for attempt in range(4):
+        try:
+            return call("POST", "me/threads_publish", {"creation_id": cid})["id"]
+        except RuntimeError as e:
+            last = e
+            if "4279009" not in str(e) and "cannot be found" not in str(e):
+                raise
+            print(f"threads_publish: контейнер {cid} не найден, попытка {attempt + 1}/4", flush=True)
+            time.sleep(15)
+            wait_ready(cid)
+    raise last
 
 
 def chunks(text):
@@ -119,9 +130,16 @@ def publish(folder):
             wait_ready(k)
         cid = call("POST", "me/threads", {
             "media_type": "CAROUSEL", "children": ",".join(kids), **first})["id"]
-    post_id = publish_container(cid)
-    last = post_id
-    for i, part in enumerate(parts[1:], 1):
+    prog = folder / ".threads_progress"
+    state = json.loads(prog.read_text()) if prog.exists() else {"done": 0, "last": None}
+    if state["done"] == 0:
+        print(f"threads: часть 1/{len(parts)} (контейнер {cid})", flush=True)
+        state = {"done": 1, "last": publish_container(cid)}
+        prog.write_text(json.dumps(state))
+    last = state["last"]
+    for i in range(state["done"], len(parts)):
+        part = parts[i]
+        print(f"threads: часть {i + 1}/{len(parts)}", flush=True)
         args = {"media_type": "TEXT", "text": part, "reply_to_id": last}
         rid = None
         if i == len(parts) - 1 and "t.me/vladimirAIAvtom" in part:
@@ -132,6 +150,7 @@ def publish(folder):
         if rid is None:
             rid = call("POST", "me/threads", args)["id"]
         last = publish_container(rid)
+        prog.write_text(json.dumps({"done": i + 1, "last": last}))
 
 
 def main():

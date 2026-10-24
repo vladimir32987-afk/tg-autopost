@@ -1,0 +1,23 @@
+name: pinned
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish
+  cancel-in-progress: false
+jobs:
+  pinned:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/pinned_post.py
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: "@vladimirAIAvtom"
+      - name: Сохранить id закрепа
+        run: |
+          git config user.name "autopost"
+          git config user.email "autopost@users.noreply.github.com"
+          git add pinned/message_id.txt || true
+          git diff --cached --quiet || (git commit -m "pinned: id закрепа" && git pull -q --rebase origin main && git push)

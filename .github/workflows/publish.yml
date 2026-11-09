@@ -21,10 +21,11 @@ jobs:
         if: always()
         env:
           THREADS_TOKEN: ${{ secrets.THREADSTOKEN }}
-      - run: python3 scripts/publish_instagram.py
-        if: always()
-        env:
-          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+      # Instagram на паузе с 09.11.2026. Чтобы вернуть, раскомментируй 4 строки ниже.
+      # - run: python3 scripts/publish_instagram.py
+      #   if: always()
+      #   env:
+      #     INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
       - name: Отметить опубликованное
         if: always()
         run: |

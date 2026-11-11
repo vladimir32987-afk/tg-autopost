@@ -95,6 +95,16 @@ def chunks(text):
     return out
 
 
+def create_first(params):
+    try:
+        return call("POST", "me/threads", params)["id"]
+    except RuntimeError as e:
+        if "topic_tag" not in params:
+            raise
+        print(f"topic_tag не принят, публикую без него: {str(e)[:200]}")
+        return call("POST", "me/threads", {k: v for k, v in params.items() if k != "topic_tag"})["id"]
+
+
 def natural(p):
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", p.name)]
 
@@ -114,11 +124,15 @@ def publish(folder):
     base = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/posts/{urllib.parse.quote(folder.name)}"
     first = {"text": parts[0]} if parts[0] else {}
 
+    tg = folder / "tag.txt"
+    tag = tg.read_text(encoding="utf-8").strip() if tg.exists() else ""
+    if tag:  # одна тема на ветку (topic tag); если API не примет, публикуем без неё
+        first = {**first, "topic_tag": tag}
     if not imgs:
-        cid = call("POST", "me/threads", {"media_type": "TEXT", **first})["id"]
+        cid = create_first({"media_type": "TEXT", **first})
     elif len(imgs) == 1:
-        cid = call("POST", "me/threads", {
-            "media_type": "IMAGE", "image_url": f"{base}/{urllib.parse.quote(imgs[0].name)}", **first})["id"]
+        cid = create_first({
+            "media_type": "IMAGE", "image_url": f"{base}/{urllib.parse.quote(imgs[0].name)}", **first})
     else:
         kids = []
         for p in imgs:
@@ -128,8 +142,8 @@ def publish(folder):
             kids.append(k)
         for k in kids:
             wait_ready(k)
-        cid = call("POST", "me/threads", {
-            "media_type": "CAROUSEL", "children": ",".join(kids), **first})["id"]
+        cid = create_first({
+            "media_type": "CAROUSEL", "children": ",".join(kids), **first})
     prog = folder / ".threads_progress"
     state = json.loads(prog.read_text()) if prog.exists() else {"done": 0, "last": None}
     if state["done"] == 0:

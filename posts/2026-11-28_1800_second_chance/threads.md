@@ -12,5 +12,4 @@
 ---
 Ты удаляешь рилсы, которые не зашли, или даёшь второй шанс?
 
-Бот: t.me/UnikalizatorEcom_bot
-Разбираю такое в Telegram: t.me/vladimirAIAvtom
+Бот и все гайды - в Telegram, ссылка в шапке профиля 👆

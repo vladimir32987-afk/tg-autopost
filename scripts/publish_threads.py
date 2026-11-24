@@ -26,6 +26,7 @@ TZ = timezone(timedelta(hours=7))
 MAX_LATE_HOURS = 48
 LIMIT = 500
 IMG = {".jpg", ".jpeg", ".png", ".webp"}
+TEXT_ONLY = True  # в Threads только текст, без картинок (тест с 24.11)
 NAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})_(\d{4})_")
 POSTS = Path(__file__).resolve().parent.parent / "posts"
 MARK = ".published_threads"
@@ -123,6 +124,9 @@ def publish(folder):
         imgs = [folder / "th_cover.png"] if (folder / "th_cover.png").exists() else []
     base = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/posts/{urllib.parse.quote(folder.name)}"
     first = {"text": parts[0]} if parts[0] else {}
+
+    if TEXT_ONLY:
+        imgs = []
 
     tg = folder / "tag.txt"
     tag = tg.read_text(encoding="utf-8").strip() if tg.exists() else ""
